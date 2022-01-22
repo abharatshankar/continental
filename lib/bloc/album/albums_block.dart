@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AlbumsBloc extends Bloc<AlbumEvents, AlbumsState> {
   final Albumsrepository albumsrepository;
   late List<Rows> listAlbums;
+  late AlbumsModel totalResponse;
   AlbumsBloc({required this.albumsrepository}) : super(AlbumInitialState());
 
   @override
@@ -19,9 +20,11 @@ class AlbumsBloc extends Bloc<AlbumEvents, AlbumsState> {
         yield AlbumLoadingState();
 
         try {
-          listAlbums = await albumsrepository.getAlbumsList();
+          totalResponse = await albumsrepository.getAlbumsList();
 
-          yield AlbumLoadedState(albums: listAlbums);
+          yield AlbumLoadedState(
+              albums: totalResponse.rows ?? [],
+              titleStr: totalResponse.title ?? '');
         } on SocketException {
           yield AlbumListErrorstate(
             error: ('No Internet'),

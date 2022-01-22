@@ -12,8 +12,9 @@ class AlbumLoadingState extends AlbumsState {}
 class AlbumInitialState extends AlbumsState {}
 
 class AlbumLoadedState extends AlbumsState {
+  final String titleStr;
   final List<Rows> albums;
-  AlbumLoadedState({required this.albums});
+  AlbumLoadedState({required this.albums, required this.titleStr});
 }
 
 class AlbumListErrorstate extends AlbumsState {
